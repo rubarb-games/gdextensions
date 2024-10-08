@@ -1,0 +1,44 @@
+#!/usr/bin/env python
+import os
+import sys
+
+env = SConscript("../godot-cpp.4.2/SConstruct")
+
+# For reference:
+# - CCFLAGS are compilation flags shared between C and C++
+# - CFLAGS are for C-specific compilation flags
+# - CXXFLAGS are for C++-specific compilation flags
+# - CPPFLAGS are for pre-processor flags
+# - CPPDEFINES are for pre-processor defines
+# - LINKFLAGS are for linking flags
+
+# tweak this if you want to use different folders, or more folders, to store your source code in.
+cpp_path = ["src/"]
+
+env.Append(CPPPATH=cpp_path)
+
+sources = []
+for i in cpp_path:
+    sources += Glob(i + "*.cpp")
+
+# Paths
+lib_name = "nine_patch_sprite_2d"
+lib_path = "bin/" + lib_name
+
+env_suffix = env["suffix"]
+suffix = env_suffix.replace("template_", "")
+
+def get_macos_path(p_lib_path, p_lib_name):
+    folder = (".{}.{}.framework/").format(env["platform"], target)
+    file = (p_lib_name + ".{}.{}").format(env["platform"], target)
+    return p_lib_path + folder + file
+
+def get_win_path(p_lib_path):
+    return p_lib_path + suffix + env["SHLIBSUFFIX"]
+
+if env["platform"] == "macos":
+    library = env.SharedLibrary(get_macos_path(lib_path, lib_name), source=sources, )
+else:
+    library = env.SharedLibrary(get_win_path(lib_path), source=sources, )
+
+Default(library)
