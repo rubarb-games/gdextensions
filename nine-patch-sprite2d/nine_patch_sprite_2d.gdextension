@@ -1,0 +1,12 @@
+[icons]
+NinePatchSprite2D = "res://addons/nine_patch_sprite_2d/nine_patch_sprite_2d.svg"
+
+[configuration]
+entry_symbol = "nine_patch_sprite_2d_library_init"
+compatibility_minimum = 4.2
+
+[libraries]
+windows.debug.x86_64 = "res://addons/nine_patch_sprite_2d/nine_patch_sprite_2d.windows.debug.x86_64.dll"
+windows.release.x86_64 = "res://addons/nine_patch_sprite_2d/nine_patch_sprite_2d.windows.release.x86_64.dll"
+macos.debug = "res://addons/nine_patch_sprite_2d/nine_patch_sprite_2d.macos.debug.universal.framework"
+macos.release = "res://addons/nine_patch_sprite_2d/nine_patch_sprite_2d.macos.release.universal.framework"
