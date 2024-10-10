@@ -1,0 +1,10 @@
+[icons]
+TomlParser = "res://addons/toml_parser/toml_parser.svg"
+
+[configuration]
+entry_symbol = "toml_parser_init"
+compatibility_minimum = 4.3
+
+[libraries]
+windows.debug.x86_64 = "res://addons/toml_parser/toml_parser.windows.debug.x86_64.dll"
+windows.release.x86_64 = "res://addons/toml_parser/toml_parser.windows.release.x86_64.dll"
