@@ -3,3 +3,4 @@
 /**/*.sconsign.dblite
 
 toml_parser/src/*.obj
+toml_parser/src/*.os

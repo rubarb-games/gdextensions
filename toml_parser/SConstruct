@@ -17,6 +17,11 @@ cpp_path = ["src/","toml11/single-include/"]
 
 env.Append(CPPPATH=cpp_path)
 
+# set compiler flags
+if env["platform"] == "macos":
+    # enable exceptions on mac.
+    env.Append(CCFLAGS=["-fexceptions"])
+
 sources = []
 sources += Glob("src/*.cpp")
 
@@ -27,17 +32,17 @@ lib_path = "bin/" + lib_name
 env_suffix = env["suffix"]
 suffix = env_suffix.replace("template_", "")
 
-def get_macos_path(p_lib_path, p_lib_name):
-    folder = (".{}.{}.framework/").format(env["platform"], target)
-    file = (p_lib_name + ".{}.{}").format(env["platform"], target)
-    return p_lib_path + folder + file
+def get_macos_path():
+    folder = lib_path + suffix + ".framework/"
+    file = lib_name + suffix
+    return folder + file
 
-def get_win_path(p_lib_path):
-    return p_lib_path + suffix + env["SHLIBSUFFIX"]
+def get_win_path():
+    return lib_path + suffix + env["SHLIBSUFFIX"]
 
 if env["platform"] == "macos":
-    library = env.SharedLibrary(get_macos_path(lib_path, lib_name), source=sources, )
+    library = env.SharedLibrary(get_macos_path(), source=sources, )
 else:
-    library = env.SharedLibrary(get_win_path(lib_path), source=sources, )
+    library = env.SharedLibrary(get_win_path(), source=sources, )
 
 Default(library)
