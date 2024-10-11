@@ -73,9 +73,14 @@ Array TomlParser::get_arr(const String &p_key) {
 Dictionary TomlParser::get_section(const String &p_key) {
 //    godot::UtilityFunctions::print("TomlParser::get_section");
     std::string key = to_str(p_key);
+    if (!t.contains(key)) {
+        return Dictionary();
+    }
+    if (!t.at(key).is_table()) {
+        return Dictionary();
+    }
     const auto& section = toml::find(t, key);
-    Dictionary dic = to_dictionary(section);
-    return dic;
+    return to_dictionary(section);
 }
 
 Dictionary TomlParser::to_dictionary(const toml::value &val) {
