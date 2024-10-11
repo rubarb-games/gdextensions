@@ -23,7 +23,6 @@ def deploy_win(file_name):
     target = os.path.expanduser('~') + folder_target + file_name
     print('Deploy ', src, ' to: ', target)
     shutil.copy2(src, target)
-    deploy_addon()
 
 def deploy_addon():
     print('Deploy addon files')
