@@ -25,6 +25,7 @@ public:
     String get_str(const String &p_key);
     Array get_arr(const String &p_key);
     Dictionary get_section(const String &p_section_name);
+    Array get_tables(const String &p_key);
 };
 
 #endif

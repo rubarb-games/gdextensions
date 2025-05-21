@@ -10,6 +10,7 @@ void TomlParser::_bind_methods() {
     ClassDB::bind_method(D_METHOD("get_str", "p_key"), &TomlParser::get_str);
     ClassDB::bind_method(D_METHOD("get_arr", "p_key"), &TomlParser::get_arr);
     ClassDB::bind_method(D_METHOD("get_section", "p_key"), &TomlParser::get_section);
+    ClassDB::bind_method(D_METHOD("get_tables", "p_key"), &TomlParser::get_tables);
 }
 
 TomlParser::TomlParser() {}
@@ -64,11 +65,27 @@ Array TomlParser::get_arr(const String &p_key) {
             if (value.is_integer()) {
                 arr.append(value.as_integer());
             }
+            // string?
         }
         return arr;
     }
     return arr;
 }
+
+Array TomlParser::get_tables(const String &p_key) {
+    // godot::UtilityFunctions::print("TomlParser::get_tables for: "+p_key);
+    std::string key = to_str(p_key);
+    Array arr = Array();
+    if (t.contains(key) && t.at(key).is_array()) {
+        // godot::UtilityFunctions::print("TomlParser::get_tables Found "+p_key);
+        std::vector<toml::value> vec = t.at(key).as_array();
+        for (const auto& value : vec) {
+            arr.append(to_dictionary(value));
+        }
+    }
+    return arr;    
+}
+
 
 Dictionary TomlParser::get_section(const String &p_key) {
 //    godot::UtilityFunctions::print("TomlParser::get_section");
